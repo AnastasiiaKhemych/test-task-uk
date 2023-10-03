@@ -25,14 +25,15 @@ export const FormInputs: React.FC<FormInputsProps> = ({
 }) => {
     return (
         <div style={{ display: 'flex' }}>
-            <FormControl sx={{ m: 1, minWidth: 400 }} size="small">
+            <FormControl
+                sx={{ m: 1, minWidth: 400, marginLeft: '0' }}
+                size="small"
+            >
                 <InputLabel id="demo-simple-select-label">Kind</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    // value={age}
-                    label="Age"
-                    // onChange={handleChange}
+                    label="Kind"
                 >
                     <MenuItem value={10}>Ten</MenuItem>
                     <MenuItem value={20}>Twenty</MenuItem>
@@ -45,18 +46,19 @@ export const FormInputs: React.FC<FormInputsProps> = ({
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={activeCategory}
-                    label="Age"
+                    label="Category"
                     onChange={(event) => {
                         setActiveCategory(event.target.value)
                     }}
                 >
+                    <MenuItem>Clear select</MenuItem>
                     {categories.map((category) => (
                         <MenuItem value={category}>{category}</MenuItem>
                     ))}
                 </Select>
             </FormControl>
             <TextField
-                sx={{ m: 1, minWidth: 600, width: '100%' }}
+                sx={{ m: 1, minWidth: 400, width: '100%' }}
                 id="outlined-basic"
                 label="Name"
                 variant="outlined"

@@ -37,23 +37,30 @@ export const App = () => {
         setOpen(false)
     }
 
-    function updatePost(updatedPost: Post) {
-        return postsService.updatePost(updatedPost).then(({ data: post }) => {
-            setPosts((currentPosts) => {
-                const newPosts = [...currentPosts]
-                const index = newPosts.findIndex(
-                    (post) => post.id === updatedPost.id
-                )
+    const deletePost = async (postId: number): Promise<void> => {
+        try {
+            await postsService.deletePost(postId)
 
-                newPosts.splice(index, 1, post)
-
-                return newPosts
-            })
-        })
+            await fetchPageList()
+        } catch (error) {
+            throw error
+        }
     }
 
-    useEffect(() => {
-        postsService
+    const addPost = async (newPost: Post): Promise<void> => {
+        await postsService.addPost(newPost)
+
+        await fetchPageList()
+    }
+
+    const updatePost = async (updatedPost: Post): Promise<void> => {
+        await postsService.updatePost(updatedPost)
+
+        await fetchPageList()
+    }
+
+    const fetchPageList = async () => {
+        await postsService
             .getPost({
                 category: activeCategory,
                 name: activeQuery,
@@ -64,13 +71,19 @@ export const App = () => {
                 setPosts(resp.data)
                 setTotalRows(resp.meta.total)
             })
-        categoriesService.getCategories().then((data) => setCategories(data))
+        await categoriesService
+            .getCategories()
+            .then((data) => setCategories(data))
+    }
+
+    useEffect(() => {
+        fetchPageList()
     }, [activeCategory, activeQuery, page, rowsPerPage])
 
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <div>
+        <div style={{ margin: '0px 50px' }}>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
                 <FormInputs
                     activeQuery={activeQuery}
                     setActiveQuery={setActiveQuery}
@@ -82,7 +95,7 @@ export const App = () => {
                     posts={posts}
                     setPosts={setPosts}
                     handleClickEdit={handleClickEdit}
-                    // setSelectedPost={setSelectedPost}
+                    deletePost={deletePost}
                 />
                 <Button
                     variant="outlined"
@@ -106,6 +119,7 @@ export const App = () => {
                     open={open}
                     onClose={handleClose}
                     updatePost={updatePost}
+                    addPost={addPost}
                 />
                 <Pagination
                     page={page}
@@ -114,7 +128,7 @@ export const App = () => {
                     setRowsPerPage={setRowsPerPage}
                     totalRows={totalRows}
                 />
-            </div>
-        </ThemeProvider>
+            </ThemeProvider>
+        </div>
     )
 }

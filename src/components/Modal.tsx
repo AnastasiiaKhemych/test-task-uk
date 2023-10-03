@@ -5,7 +5,6 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import { TextField } from '@mui/material'
-import * as postsService from '../api/posts'
 import { Post } from '../types/Post'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -17,6 +16,7 @@ type ModalProps = {
     onClose: () => void
     postToUpdate: Post | null
     updatePost: (post: Post) => Promise<void>
+    addPost: (newPost: Post) => Promise<void>
 }
 
 type FormTypes = {
@@ -27,13 +27,12 @@ type FormTypes = {
 }
 
 export const Modal: React.FC<ModalProps> = ({
-    setPosts,
     open,
     onClose,
     postToUpdate,
     updatePost,
+    addPost,
 }) => {
-    console.log(postToUpdate)
     const { handleSubmit, control } = useForm<FormTypes>({
         values: {
             category: postToUpdate?.category || '',
@@ -50,12 +49,6 @@ export const Modal: React.FC<ModalProps> = ({
             })
         ),
     })
-
-    const addPost = (newPost: Post) => {
-        return postsService.addPost(newPost).then(({ data: newPost }) => {
-            setPosts((currentPost) => [...currentPost, newPost])
-        })
-    }
 
     const handlePostsSubmit = (data: any) => {
         if (postToUpdate) {
@@ -90,7 +83,7 @@ export const Modal: React.FC<ModalProps> = ({
                                     helperText={error?.message}
                                     label="Category"
                                     variant="outlined"
-                                    style={{ width: '100%', marginTop: '10px' }}
+                                    style={{ width: '100%', marginTop: '20px' }}
                                     value={value}
                                     onChange={onChange}
                                     size="small"
@@ -109,7 +102,7 @@ export const Modal: React.FC<ModalProps> = ({
                                     helperText={error?.message}
                                     label="Name"
                                     variant="outlined"
-                                    style={{ width: '100%', marginTop: '10px' }}
+                                    style={{ width: '100%', marginTop: '20px' }}
                                     value={value}
                                     onChange={onChange}
                                     size="small"
@@ -130,7 +123,7 @@ export const Modal: React.FC<ModalProps> = ({
                                     variant="outlined"
                                     value={value}
                                     onChange={onChange}
-                                    style={{ width: '100%', marginTop: '10px' }}
+                                    style={{ width: '100%', marginTop: '20px' }}
                                     size="small"
                                 />
                             )}
@@ -147,7 +140,10 @@ export const Modal: React.FC<ModalProps> = ({
                                     helperText={error?.message}
                                     label="Required"
                                     variant="outlined"
-                                    style={{ width: '100%', marginTop: '10px' }}
+                                    style={{
+                                        width: '100%',
+                                        marginTop: '20px',
+                                    }}
                                     value={value}
                                     onChange={onChange}
                                     size="small"

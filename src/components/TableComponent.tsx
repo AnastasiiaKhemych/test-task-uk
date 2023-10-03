@@ -10,31 +10,19 @@ import { Post } from '../types/Post'
 import TableHead from '@mui/material/TableHead'
 import CreateIcon from '@mui/icons-material/Create'
 import DeleteIcon from '@mui/icons-material/Delete'
-import * as postsService from '../api/posts'
 
 type TableComponentProps = {
     posts: Post[]
     setPosts: React.Dispatch<React.SetStateAction<Post[]>>
     handleClickEdit: (value: Post) => void
+    deletePost: (postId: number) => Promise<void>
 }
 
 export const TableComponent: React.FC<TableComponentProps> = ({
     posts,
-    setPosts,
     handleClickEdit,
+    deletePost,
 }) => {
-    const deletePost = async (postId: number) => {
-        try {
-            await postsService.deletePost(postId)
-
-            setPosts((prevPosts) => {
-                return prevPosts.filter((t) => t.id !== postId)
-            })
-        } catch (error) {
-            throw error
-        }
-    }
-
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">

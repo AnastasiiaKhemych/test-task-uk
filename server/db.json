@@ -7,88 +7,64 @@
       "id": 4
     },
     {
-      "category": "category",
-      "name": "gdfgdfg",
-      "text": "fdfdfdfdf",
-      "id": 6
-    },
-    {
-      "name": "dskldmslcl;",
-      "text": "dscml,sx",
-      "category": "dfkdskllszxs",
-      "id": 7
-    },
-    {
-      "name": "dskldmslcl;",
-      "text": "dscml,sx",
-      "category": "dfkdskllszxs",
-      "id": 8
-    },
-    {
-      "name": "sdc,lc;,",
-      "text": "dsc,l;sdc",
-      "category": "ckxvlkxl",
-      "id": 10
-    },
-    {
-      "name": "test",
-      "text": "test",
-      "category": "test",
-      "id": 11
-    },
-    {
-      "name": "name - 1",
-      "text": "text - 1",
-      "category": "category - 1",
-      "id": 12
-    },
-    {
-      "name": "test 3333",
-      "text": "test 2",
-      "category": "test 2",
-      "id": 13
-    },
-    {
-      "name": "test 2",
-      "text": "test 2",
-      "category": "test 2",
-      "id": 14
-    },
-    {
       "name": "category 3",
       "text": "category 3",
       "category": "category 3",
       "id": 25
     },
     {
-      "name": "Test item",
-      "text": "Adddddddfdsfddsfsd",
-      "category": "sxddf",
-      "id": 26
-    },
-    {
       "name": "Nastya",
       "text": "skdkslls",
-      "category": "Test",
+      "category": "Test 222222",
       "id": 27
     },
     {
-      "name": "Nastya",
-      "text": "skdksllsafdlkdl;dsl;'dsc",
-      "category": "Test",
-      "id": 28
-    },
-    {
       "name": "Nastya 1111",
       "text": "skdksllsafdlkdl;dsl;'dsc",
-      "category": "Test 1 ",
-      "id": 29
-    },
-    {
-      "name": "Nastya 1111",
-      "text": "skdksllsafdlkdl;dsl;'dsc",
-      "category": "Test 1 ",
+      "category": "Test 1 4444",
       "id": 30
+    },
+    {
+      "name": "іівів",
+      "text": "іввв",
+      "category": "вдвдж",
+      "id": 34
+    },
+    {
+      "name": "ss",
+      "text": "ss",
+      "category": "sss",
+      "id": 35
+    },
+    {
+      "name": "fdsfsdf",
+      "text": "sdfsdf",
+      "category": "dvsf",
+      "id": 39
+    },
+    {
+      "name": "fdsfsdf",
+      "text": "sdfsdf",
+      "category": "dvsf",
+      "id": 40
+    },
+    {
+      "name": "Nastya",
+      "text": "d",
+      "category": "sssd",
+      "id": 45
+    },
+    {
+      "name": "Name 1",
+      "text": "Text 1 ",
+      "category": "Category 1",
+      "id": 46
+    },
+    {
+      "name": "Name 2",
+      "text": "Text 2",
+      "category": "Category 2",
+      "id": 47
     }
   ]
 }
