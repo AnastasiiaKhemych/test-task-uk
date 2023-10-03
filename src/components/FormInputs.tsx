@@ -6,6 +6,7 @@ import {
     TextField,
 } from '@mui/material'
 import React from 'react'
+import { NightModeToggle } from './NightModeToggle'
 
 type FormInputsProps = {
     activeQuery: string
@@ -65,6 +66,7 @@ export const FormInputs: React.FC<FormInputsProps> = ({
                     setActiveQuery(event.target.value)
                 }}
             />
+            <NightModeToggle />
         </div>
     )
 }

@@ -8,6 +8,8 @@ import { Modal } from './components/Modal'
 import Button from '@mui/material/Button'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import { Pagination } from './components/Pagination'
+import { useThemeContext } from './theme/ThemeContextProvider'
+import { CssBaseline, ThemeProvider } from '@mui/material'
 
 export const App = () => {
     const [posts, setPosts] = useState<Post[]>([])
@@ -19,6 +21,7 @@ export const App = () => {
     const [page, setPage] = React.useState(0)
     const [rowsPerPage, setRowsPerPage] = React.useState(10)
     const [totalRows, setTotalRows] = React.useState<number>(0)
+    const { theme } = useThemeContext()
 
     const handleClickOpen = () => {
         setPostToUpdate(null)
@@ -32,7 +35,6 @@ export const App = () => {
 
     const handleClose = () => {
         setOpen(false)
-        // setUpdated(false);
     }
 
     function updatePost(updatedPost: Post) {
@@ -66,50 +68,53 @@ export const App = () => {
     }, [activeCategory, activeQuery, page, rowsPerPage])
 
     return (
-        <div>
-            <FormInputs
-                activeQuery={activeQuery}
-                setActiveQuery={setActiveQuery}
-                categories={categories}
-                activeCategory={activeCategory}
-                setActiveCategory={setActiveCategory}
-            />
-            <TableComponent
-                posts={posts}
-                setPosts={setPosts}
-                handleClickEdit={handleClickEdit}
-                // setSelectedPost={setSelectedPost}
-            />
-            <Button
-                variant="outlined"
-                onClick={handleClickOpen}
-                startIcon={<AddCircleIcon />}
-                sx={{
-                    color: '#33CC33',
-                    border: '1px solid #33CC33',
-                    marginTop: '10px',
-                    '&:hover': {
-                        border: '1px solid green',
-                        color: 'green',
-                    },
-                }}
-            >
-                REQUISITION
-            </Button>
-            <Modal
-                postToUpdate={postToUpdate}
-                setPosts={setPosts}
-                open={open}
-                onClose={handleClose}
-                updatePost={updatePost}
-            />
-            <Pagination
-                page={page}
-                setPage={setPage}
-                rowsPerPage={rowsPerPage}
-                setRowsPerPage={setRowsPerPage}
-                totalRows={totalRows}
-            />
-        </div>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <div>
+                <FormInputs
+                    activeQuery={activeQuery}
+                    setActiveQuery={setActiveQuery}
+                    categories={categories}
+                    activeCategory={activeCategory}
+                    setActiveCategory={setActiveCategory}
+                />
+                <TableComponent
+                    posts={posts}
+                    setPosts={setPosts}
+                    handleClickEdit={handleClickEdit}
+                    // setSelectedPost={setSelectedPost}
+                />
+                <Button
+                    variant="outlined"
+                    onClick={handleClickOpen}
+                    startIcon={<AddCircleIcon />}
+                    sx={{
+                        color: '#33CC33',
+                        border: '1px solid #33CC33',
+                        marginTop: '10px',
+                        '&:hover': {
+                            border: '1px solid green',
+                            color: 'green',
+                        },
+                    }}
+                >
+                    REQUISITION
+                </Button>
+                <Modal
+                    postToUpdate={postToUpdate}
+                    setPosts={setPosts}
+                    open={open}
+                    onClose={handleClose}
+                    updatePost={updatePost}
+                />
+                <Pagination
+                    page={page}
+                    setPage={setPage}
+                    rowsPerPage={rowsPerPage}
+                    setRowsPerPage={setRowsPerPage}
+                    totalRows={totalRows}
+                />
+            </div>
+        </ThemeProvider>
     )
 }

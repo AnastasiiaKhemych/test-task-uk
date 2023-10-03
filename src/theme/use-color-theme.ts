@@ -1,0 +1,28 @@
+import React from 'react'
+import { PaletteMode, createTheme } from '@mui/material'
+import { theme } from './theme'
+
+export const useColorTheme = () => {
+    const [mode, setMode] = React.useState<PaletteMode>('light')
+
+    const toggleColorMode = () =>
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
+
+    const modifiedTheme = React.useMemo(
+        () =>
+            createTheme({
+                ...theme,
+                palette: {
+                    ...theme.palette,
+                    mode,
+                },
+            }),
+        [mode]
+    )
+
+    return {
+        theme: modifiedTheme,
+        mode,
+        toggleColorMode,
+    }
+}
