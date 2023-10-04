@@ -33,7 +33,7 @@ export const Modal: React.FC<ModalProps> = ({
     updatePost,
     addPost,
 }) => {
-    const { handleSubmit, control } = useForm<FormTypes>({
+    const { handleSubmit, control, reset } = useForm<FormTypes>({
         values: {
             category: postToUpdate?.category || '',
             name: postToUpdate?.name || '',
@@ -54,7 +54,7 @@ export const Modal: React.FC<ModalProps> = ({
         if (postToUpdate) {
             updatePost({ ...data, id: postToUpdate.id }).then(onClose)
         } else {
-            addPost(data).then(onClose)
+            addPost(data).then(onClose).finally(reset)
         }
     }
 
@@ -154,7 +154,10 @@ export const Modal: React.FC<ModalProps> = ({
                             sx={{ paddingRight: '0px', paddingTop: '20px' }}
                         >
                             <Button
-                                onClick={onClose}
+                                onClick={() => {
+                                    onClose()
+                                    reset()
+                                }}
                                 variant="outlined"
                                 sx={{
                                     color: '#33CC33',
