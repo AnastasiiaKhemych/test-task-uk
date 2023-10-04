@@ -14,6 +14,7 @@ type FormInputsProps = {
     categories: string[]
     activeCategory: string
     setActiveCategory: React.Dispatch<React.SetStateAction<string>>
+    setPage: React.Dispatch<React.SetStateAction<number>>
 }
 
 export const FormInputs: React.FC<FormInputsProps> = ({
@@ -22,6 +23,7 @@ export const FormInputs: React.FC<FormInputsProps> = ({
     categories,
     activeCategory,
     setActiveCategory,
+    setPage,
 }) => {
     return (
         <div style={{ display: 'flex' }}>
@@ -66,6 +68,7 @@ export const FormInputs: React.FC<FormInputsProps> = ({
                 value={activeQuery}
                 onChange={(event) => {
                     setActiveQuery(event.target.value)
+                    setPage(0)
                 }}
             />
             <NightModeToggle />
