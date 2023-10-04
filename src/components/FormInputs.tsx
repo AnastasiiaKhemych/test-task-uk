@@ -1,5 +1,6 @@
 import {
     FormControl,
+    IconButton,
     InputLabel,
     MenuItem,
     Select,
@@ -7,6 +8,7 @@ import {
 } from '@mui/material'
 import React from 'react'
 import { NightModeToggle } from './NightModeToggle'
+import ClearIcon from '@mui/icons-material/Clear'
 
 type FormInputsProps = {
     activeQuery: string
@@ -60,7 +62,14 @@ export const FormInputs: React.FC<FormInputsProps> = ({
                 </Select>
             </FormControl>
             <TextField
-                sx={{ m: 1, minWidth: 400, width: '100%' }}
+                sx={{
+                    m: 1,
+                    minWidth: 400,
+                    width: '100%',
+                    '& .MuiInputBase-root': {
+                        paddingRight: 0,
+                    },
+                }}
                 id="outlined-basic"
                 label="Name"
                 variant="outlined"
@@ -69,6 +78,16 @@ export const FormInputs: React.FC<FormInputsProps> = ({
                 onChange={(event) => {
                     setActiveQuery(event.target.value)
                     setPage(0)
+                }}
+                InputProps={{
+                    endAdornment: activeQuery && (
+                        <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={() => setActiveQuery('')}
+                        >
+                            <ClearIcon />
+                        </IconButton>
+                    ),
                 }}
             />
             <NightModeToggle />

@@ -4,11 +4,12 @@ import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
-import { TextField } from '@mui/material'
+import { IconButton, TextField } from '@mui/material'
 import { Post } from '../types/Post'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { object, string } from 'yup'
+import ClearIcon from '@mui/icons-material/Clear'
 
 type ModalProps = {
     setPosts: React.Dispatch<React.SetStateAction<Post[]>>
@@ -33,7 +34,7 @@ export const Modal: React.FC<ModalProps> = ({
     updatePost,
     addPost,
 }) => {
-    const { handleSubmit, control, reset } = useForm<FormTypes>({
+    const { handleSubmit, control, reset, setValue } = useForm<FormTypes>({
         values: {
             category: postToUpdate?.category || '',
             name: postToUpdate?.name || '',
@@ -83,10 +84,28 @@ export const Modal: React.FC<ModalProps> = ({
                                     helperText={error?.message}
                                     label="Category"
                                     variant="outlined"
-                                    style={{ width: '100%', marginTop: '20px' }}
+                                    sx={{
+                                        width: '100%',
+                                        marginTop: '20px',
+                                        '& .MuiInputBase-root': {
+                                            paddingRight: 0,
+                                        },
+                                    }}
                                     value={value}
                                     onChange={onChange}
                                     size="small"
+                                    InputProps={{
+                                        endAdornment: value && (
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={() =>
+                                                    setValue('category', '')
+                                                }
+                                            >
+                                                <ClearIcon />
+                                            </IconButton>
+                                        ),
+                                    }}
                                 />
                             )}
                         />
@@ -102,10 +121,28 @@ export const Modal: React.FC<ModalProps> = ({
                                     helperText={error?.message}
                                     label="Name"
                                     variant="outlined"
-                                    style={{ width: '100%', marginTop: '20px' }}
+                                    sx={{
+                                        width: '100%',
+                                        marginTop: '20px',
+                                        '& .MuiInputBase-root': {
+                                            paddingRight: 0,
+                                        },
+                                    }}
                                     value={value}
                                     onChange={onChange}
                                     size="small"
+                                    InputProps={{
+                                        endAdornment: value && (
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={() =>
+                                                    setValue('name', '')
+                                                }
+                                            >
+                                                <ClearIcon />
+                                            </IconButton>
+                                        ),
+                                    }}
                                 />
                             )}
                         />
@@ -123,8 +160,26 @@ export const Modal: React.FC<ModalProps> = ({
                                     variant="outlined"
                                     value={value}
                                     onChange={onChange}
-                                    style={{ width: '100%', marginTop: '20px' }}
+                                    sx={{
+                                        width: '100%',
+                                        marginTop: '20px',
+                                        '& .MuiInputBase-root': {
+                                            paddingRight: 0,
+                                        },
+                                    }}
                                     size="small"
+                                    InputProps={{
+                                        endAdornment: value && (
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={() =>
+                                                    setValue('text', '')
+                                                }
+                                            >
+                                                <ClearIcon />
+                                            </IconButton>
+                                        ),
+                                    }}
                                 />
                             )}
                         />
@@ -140,13 +195,28 @@ export const Modal: React.FC<ModalProps> = ({
                                     helperText={error?.message}
                                     label="Required"
                                     variant="outlined"
-                                    style={{
+                                    sx={{
                                         width: '100%',
                                         marginTop: '20px',
+                                        '& .MuiInputBase-root': {
+                                            paddingRight: 0,
+                                        },
                                     }}
                                     value={value}
                                     onChange={onChange}
                                     size="small"
+                                    InputProps={{
+                                        endAdornment: value && (
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={() =>
+                                                    setValue('required', '')
+                                                }
+                                            >
+                                                <ClearIcon />
+                                            </IconButton>
+                                        ),
+                                    }}
                                 />
                             )}
                         />
