@@ -4,6 +4,7 @@ import {
     InputLabel,
     MenuItem,
     Select,
+    SelectChangeEvent,
     TextField,
 } from '@mui/material'
 import React from 'react'
@@ -12,20 +13,21 @@ import ClearIcon from '@mui/icons-material/Clear'
 
 type FormInputsProps = {
     activeQuery: string
-    setActiveQuery: React.Dispatch<React.SetStateAction<string>>
+    handleQueryChange: (event: React.ChangeEvent<HTMLInputElement>) => void
     categories: string[]
-    activeCategory: string
-    setActiveCategory: React.Dispatch<React.SetStateAction<string>>
+    activeCategory: string | undefined
+    handleCategoryChange: (event: SelectChangeEvent) => void
     setPage: React.Dispatch<React.SetStateAction<number>>
+    handleCloseQuery: () => void
 }
 
 export const FormInputs: React.FC<FormInputsProps> = ({
     activeQuery,
-    setActiveQuery,
+    handleQueryChange,
     categories,
     activeCategory,
-    setActiveCategory,
-    setPage,
+    handleCategoryChange,
+    handleCloseQuery,
 }) => {
     return (
         <div style={{ display: 'flex' }}>
@@ -51,11 +53,11 @@ export const FormInputs: React.FC<FormInputsProps> = ({
                     id="demo-simple-select"
                     value={activeCategory}
                     label="Category"
-                    onChange={(event) => {
-                        setActiveCategory(event.target.value)
-                    }}
+                    onChange={handleCategoryChange}
                 >
-                    <MenuItem>Clear select</MenuItem>
+                    <MenuItem value="">
+                        <em>None</em>
+                    </MenuItem>
                     {categories.map((category) => (
                         <MenuItem value={category}>{category}</MenuItem>
                     ))}
@@ -75,15 +77,12 @@ export const FormInputs: React.FC<FormInputsProps> = ({
                 variant="outlined"
                 size="small"
                 value={activeQuery}
-                onChange={(event) => {
-                    setActiveQuery(event.target.value)
-                    setPage(0)
-                }}
+                onChange={handleQueryChange}
                 InputProps={{
                     endAdornment: activeQuery && (
                         <IconButton
                             aria-label="toggle password visibility"
-                            onClick={() => setActiveQuery('')}
+                            onClick={handleCloseQuery}
                         >
                             <ClearIcon />
                         </IconButton>

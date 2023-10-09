@@ -1,27 +1,29 @@
-import React, {useEffect, useState} from 'react'
-import {FormInputs} from './components/FormInputs'
-import {Post} from './types/Post'
+import React, { useEffect, useState } from 'react'
+import { FormInputs } from './components/FormInputs'
+import { Post } from './types/Post'
 import * as postsService from './api/posts'
 import * as categoriesService from './api/categories'
-import {TableComponent} from './components/TableComponent'
-import {Modal} from './components/Modal'
+import { TableComponent } from './components/TableComponent'
+import { Modal } from './components/Modal'
 import Button from '@mui/material/Button'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
-import {Pagination} from './components/Pagination'
-import {useThemeContext} from './theme/ThemeContextProvider'
-import {CssBaseline, ThemeProvider} from '@mui/material'
+import { Pagination } from './components/Pagination'
+import { useThemeContext } from './theme/ThemeContextProvider'
+import { CssBaseline, SelectChangeEvent, ThemeProvider } from '@mui/material'
+import { useSearchParams } from 'react-router-dom'
 
 export const App = () => {
+    const [searchParams, setSearchParams] = useSearchParams()
     const [posts, setPosts] = useState<Post[]>([])
     const [categories, setCategories] = useState<string[]>([])
     const [open, setOpen] = React.useState(false)
     const [postToUpdate, setPostToUpdate] = useState<Post | null>(null)
-    const [activeCategory, setActiveCategory] = useState('')
-    const [activeQuery, setActiveQuery] = useState('')
+    const activeQuery = searchParams.get('name') || ''
+    const activeCategory = searchParams.get('category') || undefined
     const [page, setPage] = React.useState(0)
     const [rowsPerPage, setRowsPerPage] = React.useState(10)
     const [totalRows, setTotalRows] = React.useState<number>(0)
-    const {theme} = useThemeContext()
+    const { theme } = useThemeContext()
 
     const handleClickOpen = () => {
         setPostToUpdate(null)
@@ -35,6 +37,33 @@ export const App = () => {
 
     const handleClose = () => {
         setOpen(false)
+    }
+
+    const handleCloseQuery = () => {
+        const params = new URLSearchParams(searchParams)
+        params.delete('name')
+        setSearchParams(params)
+    }
+
+    const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const params = new URLSearchParams(searchParams)
+        if (event.target.value === '') {
+            params.delete('name')
+        } else {
+            params.set('name', event.target.value)
+        }
+        setSearchParams(params)
+        setPage(0)
+    }
+
+    const handleCategoryChange = (event: SelectChangeEvent) => {
+        const params = new URLSearchParams(searchParams)
+        if (event.target.value === '') {
+            params.delete('category')
+        } else {
+            params.set('category', event.target.value)
+        }
+        setSearchParams(params)
     }
 
     const deletePost = async (postId: number): Promise<void> => {
@@ -81,16 +110,17 @@ export const App = () => {
     }, [activeCategory, activeQuery, page, rowsPerPage])
 
     return (
-        <div style={{margin: '0px 50px'}}>
+        <div style={{ margin: '0px 50px' }}>
             <ThemeProvider theme={theme}>
-                <CssBaseline/>
+                <CssBaseline />
                 <FormInputs
                     activeQuery={activeQuery}
-                    setActiveQuery={setActiveQuery}
+                    handleQueryChange={handleQueryChange}
                     categories={categories}
                     activeCategory={activeCategory}
-                    setActiveCategory={setActiveCategory}
+                    handleCategoryChange={handleCategoryChange}
                     setPage={setPage}
+                    handleCloseQuery={handleCloseQuery}
                 />
                 <TableComponent
                     posts={posts}
@@ -101,7 +131,7 @@ export const App = () => {
                 <Button
                     variant="outlined"
                     onClick={handleClickOpen}
-                    startIcon={<AddCircleIcon/>}
+                    startIcon={<AddCircleIcon />}
                     sx={{
                         color: '#33CC33',
                         border: '1px solid #33CC33',
